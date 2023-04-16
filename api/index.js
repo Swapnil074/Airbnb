@@ -43,7 +43,10 @@ app.post('/login',async(req,res)=>{
     if(user){
         const passOk=bcrypt.compareSync(password,user.password);
         if(passOk){
-            jwt.sign({id: user._id,email:user.email},jwtSecret,{},(e,token)=>{
+            jwt.sign({
+                name:user.name,
+                id: user._id,
+                email:user.email},jwtSecret,{},(e,token)=>{
                 if(e) throw e
                 else
         res.cookie('token',token).json(user);
@@ -61,6 +64,16 @@ app.post('/login',async(req,res)=>{
 
 app.get('/profile',(req,res)=>{
     const {token}=req.cookies
+    if(token){
+        jwt.verify(token,jwtSecret,{},  (err,user)=>{
+            if(err) throw err
+            res.json(user);
+        })
+    }
+    else
+    {
+        res.json(null)
+    }
     res.json({token})
 })
 
