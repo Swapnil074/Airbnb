@@ -12,6 +12,8 @@ const bcryptSalt=bcrypt.genSaltSync(10);
 const jwtSecret="ewagsdgwrae";
 const multer=require('multer')
 const fs=require('fs')
+const Place=require('./models/Place')
+
 app.use(express.json())
 app.use(cookieParser())
 app.use('/uploads',express.static(__dirname+'/uploads'))
@@ -92,16 +94,47 @@ app.post('/upload-by-link',async (req,res)=>{
 
 })
 const photosMiddleware=multer({dest:'uploads/'})
-app.post('/upload',photosMiddleware.array('photos',100),(req,res )=>{
-    const uploadedFiles=[]
-    for(let i=0; i<req.files.length;i++){
-        const {path,originalname}=req.files[i]
-        const parts=originalname.split('.')
-        const ext=parts[parts.length-1]
-        const newPath=path+'.'+ext
-        fs.renameSync(path,newPath)
-        uploadedFiles.push(newPath.replace('uploads/',''))
-    }
-     res.json(uploadedFiles)
-})
+app.post("/upload", photosMiddleware.array("photos", 100), (req, res) => {
+  const uploadedFiles = [];
+  for (let i = 0; i < req.files.length; i++) {
+    const { path, originalname } = req.files[i];
+    const parts = originalname.split(".");
+    const ext = parts[parts.length - 1];
+    const newPath = path + "." + ext;
+    fs.renameSync(path, newPath);
+    uploadedFiles.push(newPath.replace("uploads/", ""));
+  }
+  res.json(uploadedFiles);
+});
+
+app.post("/places",  (req, res) => {
+    const {token}=req.cookies
+    const{
+        title,
+       address,
+       addedPhotos,
+       description,
+       perks,
+       extraInfo,
+       checkIn,
+       checkOut,
+       maxGuests,
+    }=req.body
+    jwt.verify(token,jwtSecret,{},async (err,userData)=>{
+        if (err) throw err
+        const place=await Place.create({
+            owner:userData.id,
+            title,
+            address,
+            addedPhotos,
+            description,
+            perks,
+            extraInfo,
+            checkIn,
+            checkOut,
+            maxGuests,
+        })
+        res.json(place)
+    })
+});
 app.listen(4000)
