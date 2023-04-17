@@ -7,12 +7,14 @@ const jwt=require('jsonwebtoken')
 require('dotenv').config()
 const bcrypt=require('bcryptjs')
 const cookieParser=require('cookie-parser')
-
+const imagedownloader=require('image-downloader')
 const bcryptSalt=bcrypt.genSaltSync(10);
 const jwtSecret="ewagsdgwrae";
-
+const multer=require('multer')
+const fs=require('fs')
 app.use(express.json())
 app.use(cookieParser())
+app.use('/uploads',express.static(__dirname+'/uploads'))
 app.use(cors({
     credentials:true,
     origin:'http://localhost:5173',
@@ -79,5 +81,27 @@ app.get('/profile',(req,res)=>{
 app.post('/logout',(req,res)=>{
     res.cookie('token','').json(true)
 })
+app.post('/upload-by-link',async (req,res)=>{
+    const {link}=req.body
+    const newName='photo'+Date.now()+'.jpg'
+    await imagedownloader.image({
+        url:link,
+        dest:__dirname + '/uploads/' + newName
+    })
+    res.json(newName)
 
+})
+const photosMiddleware=multer({dest:'uploads/'})
+app.post('/upload',photosMiddleware.array('photos',100),(req,res )=>{
+    const uploadedFiles=[]
+    for(let i=0; i<req.files.length;i++){
+        const {path,originalname}=req.files[i]
+        const parts=originalname.split('.')
+        const ext=parts[parts.length-1]
+        const newPath=path+'.'+ext
+        fs.renameSync(path,newPath)
+        uploadedFiles.push(newPath.replace('uploads/',''))
+    }
+     res.json(uploadedFiles)
+})
 app.listen(4000)
