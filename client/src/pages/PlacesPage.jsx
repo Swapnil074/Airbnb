@@ -40,9 +40,9 @@ export default function Places() {
               to={"/account/places/" + place._id}
               className=" flex cursor-pointer bg-gray-200 p-4 rounded-2xl my-4 gap-4"
             >
-              <div className="w-32 h-32 bg-gray-300 grow shrink-0">
-                {place.photos.length && (
-                  <img
+              <div className="flex w-32 h-32 bg-gray-300 grow shrink-0">
+                {place.photos.length>0 && (
+                  <img className="object-cover"
                     src={"http://localhost:4000/uploads/" + place.photos[0]}
                   />
                 )}

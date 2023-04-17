@@ -153,4 +153,39 @@ app.get('/places/:id', async (req,res)=>{
     res.json(data)
 })
 
+app.put('/places', async(req,res)=>{
+    const {
+      id,
+      title,
+      address,
+      addedPhotos,
+      description,
+      perks,
+      extraInfo,
+      checkIn,
+      checkOut,
+      maxGuests,
+    } = req.body;
+    const {token}=req.cookies
+    jwt.verify(token,jwtSecret,{},async(err,userData)=>{
+        if(err) throw err
+    const placeData=await Place.findById(id)
+        if(userData.id===placeData.owner.toString()){
+            placeData.set({
+              title,
+              address,
+              photos: addedPhotos,
+              description,
+              perks,
+              extraInfo,
+              checkIn,
+              checkOut,
+              maxGuests,
+            });
+            await placeData.save()
+            res.json("Ok");
+        }
+    })
+})
+
 app.listen(4000)

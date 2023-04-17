@@ -6,7 +6,7 @@ import AccountNav from "../AccountNavigation";
 import { Navigate, useParams } from "react-router-dom";
 
 export default function PlacesForm(){
-  const {id}=useParams()
+        const { id } = useParams();
         const [title, setTitle] = useState("");
         const [address, setAddress] = useState("");
         const [addedPhotos, setAddedPhotos] = useState([]);
@@ -53,8 +53,9 @@ export default function PlacesForm(){
             );
           }
         
-           async function addNewPlace(e){
+           async function savePlace(e){
              e.preventDefault();
+
              const placeData = {
                title,
                address,
@@ -66,9 +67,16 @@ export default function PlacesForm(){
                checkOut,
                maxGuests,
              };
+             if(id){
+                await axios.put('/places',{id,...placeData})
+             setRedirect(true)
+
+             }
+             else{
              await axios.post("/places", placeData);
              setRedirect(true)
            }
+          }
            if(redirect){
             return(
               <Navigate to={'/account/places'}/>
@@ -78,7 +86,7 @@ export default function PlacesForm(){
           <>
             <AccountNav />
             <div>
-              <form onSubmit={(e) => addNewPlace(e)}>
+              <form onSubmit={(e) => savePlace(e)}>
                 {preInput("Title", "Title/heading for your place")}
                 <input
                   type="text"
