@@ -2,6 +2,8 @@ import axios from "axios";
 import PerkLabels from "../PerksLabel";
 import PhotoUploader from "../PhotosUploader";
 import { useState } from "react";
+import AccountNav from "../AccountNavigation";
+import { Navigate } from "react-router-dom";
 
 export default function PlacesForm(){
         const [title, setTitle] = useState("");
@@ -14,6 +16,7 @@ export default function PlacesForm(){
         const [checkIn, setCheckIn] = useState("");
         const [checkOut, setcheckOut] = useState("");
         const [maxGuests, setMaxGuests] = useState(2);
+        const [redirect,setRedirect]=useState(false)
         function inputHeader(header) {
             return <h2 className="text-xl mt-4 ">{header}</h2>;
           }
@@ -43,9 +46,16 @@ export default function PlacesForm(){
                maxGuests,
              };
              await axios.post("/places", placeData);
+             setRedirect(true)
+           }
+           if(redirect){
+            return(
+              <Navigate to={'/account/places'}/>
+            )
            }
         return (
           <>
+          <AccountNav/>
             <div>
               <form onSubmit={(e) => addNewPlace(e)}>
                 {preInput("Title", "Title/heading for your place")}

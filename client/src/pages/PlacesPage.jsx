@@ -1,15 +1,12 @@
-import { Link, Navigate, useParams } from "react-router-dom";
-import PlacesForm from "./PlacesFormPage";
+import { Link } from "react-router-dom";
+import AccountNav from "../AccountNavigation";
 
 export default function Places() {
-  const { action } = useParams();
-
-  
-
   return (
     <div>
-      {action !== "new" && (
+      <AccountNav/>
         <div className="text-center">
+          List of all Accommodations<br/>
           <Link
             className="inline-flex gap-1 bg-primary text-white py-2 px-6 rounded-full"
             to={"/account/places/new"}
@@ -31,10 +28,6 @@ export default function Places() {
             Add new Place
           </Link>
         </div>
-      )}
-      {action === "new" && (
-        <PlacesForm />
-      )}
     </div>
   );
 }
