@@ -30,7 +30,7 @@ export default function PhotoUploader({photoLink, setPhotoLink,setAddedPhotos,ad
     }
     return (
       <>
-        <div className="flex gap-2">
+        <div className="flex gap-4 ">
           <input
             type="text"
             placeholder="Add using a link..."
@@ -49,7 +49,7 @@ export default function PhotoUploader({photoLink, setPhotoLink,setAddedPhotos,ad
             addedPhotos.map((link) => (
               <div className="h-32 flex" key={link}>
                 <img
-                  className="rounded-2xl w-full object-coverz"
+                  className="rounded-2xl w-full object-cover"
                   src={"http://localhost:4000/uploads/" + link}
                   alt="Photo"
                 />

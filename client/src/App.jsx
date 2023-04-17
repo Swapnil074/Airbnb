@@ -25,6 +25,7 @@ export default function App() {
       <Route path="/account" element={<Account/>}/>
       <Route path="/account/places" element={<Places/> }/>
       <Route path="/account/places/new" element={<PlacesForm/> }/>
+      <Route path="/account/places/:id" element={<PlacesForm/> }/>
       </Route>
 
     </Routes>

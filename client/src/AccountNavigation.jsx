@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom"
 export default function AccountNav(){
     const {pathname}=useLocation()
     let subpage=pathname.split('/')?.[2]
-    console.log(subpage)
     if(subpage===undefined) subpage='profile'
     function linkClasses(type=null){
       let classes = "inline-flex gap-1 py-2 px-6 rounded-full";

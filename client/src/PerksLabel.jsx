@@ -10,7 +10,7 @@ export default function PerkLabels({selected, onChange}){
     return (
       <>
         <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-          <input type="checkbox" name="wifi" onClick={(e)=>handleCheckbox(e)}/>
+          <input type="checkbox" checked={selected.includes('wifi')} name="wifi" onClick={(e)=>handleCheckbox(e)}/>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -28,7 +28,7 @@ export default function PerkLabels({selected, onChange}){
           <span>Wifi</span>
         </label>
         <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-          <input type="checkbox" name="parking" onClick={(e)=>handleCheckbox(e)}/>
+          <input type="checkbox" checked={selected.includes('parking')} name="parking" onClick={(e)=>handleCheckbox(e)}/>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -47,7 +47,7 @@ export default function PerkLabels({selected, onChange}){
           <span>Parking</span>
         </label>
         <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-          <input type="checkbox" name="tv" onClick={(e)=>handleCheckbox(e)}/>
+          <input type="checkbox" checked={selected.includes('tv')} name="tv" onClick={(e)=>handleCheckbox(e)}/>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -65,7 +65,7 @@ export default function PerkLabels({selected, onChange}){
           <span>TV</span>
         </label>
         <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-          <input type="checkbox" name="pets" onClick={(e)=>handleCheckbox(e)}/>
+          <input type="checkbox" checked={selected.includes('pets')} name="pets" onClick={(e)=>handleCheckbox(e)}/>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
@@ -85,7 +85,7 @@ export default function PerkLabels({selected, onChange}){
         </label>
 
         <label className="border p-4 flex rounded-2xl gap-2 items-center cursor-pointer">
-          <input type="checkbox" name="private entrance" onClick={(e)=>handleCheckbox(e)}/>
+          <input type="checkbox" checked={selected.includes('private entrance')} name="private entrance" onClick={(e)=>handleCheckbox(e)}/>
           <svg
             xmlns="http://www.w3.org/2000/svg"
             fill="none"
