@@ -16,6 +16,7 @@ export default function PlacesForm(){
         const [extraInfo, setExtraInfo] = useState("");
         const [checkIn, setCheckIn] = useState("");
         const [checkOut, setcheckOut] = useState("");
+        const [price, setPrice] = useState("");
         const [maxGuests, setMaxGuests] = useState(2);
         const [redirect,setRedirect]=useState(false);
 
@@ -34,6 +35,7 @@ export default function PlacesForm(){
               setCheckIn(data.checkIn)
               setcheckOut(data.checkOut)
               setMaxGuests(data.maxGuests)
+              setPrice(data.price)
             })
           }
         },[id])
@@ -66,6 +68,7 @@ export default function PlacesForm(){
                checkIn,
                checkOut,
                maxGuests,
+               price
              };
              if(id){
                 await axios.put('/places',{id,...placeData})
@@ -154,6 +157,15 @@ export default function PlacesForm(){
                       placeholder="2"
                       value={maxGuests}
                       onChange={(e) => setMaxGuests(e.target.value)}
+                    />
+                  </div>
+                  <div>
+                    <h3 className="mt-2 -mb-1 ">Price</h3>
+                    <input
+                      type="text"
+                      placeholder="$45.00"
+                      value={price}
+                      onChange={(e) => setPrice(e.target.value)}
                     />
                   </div>
                 </div>

@@ -6,7 +6,7 @@ import AccountNav from "../AccountNavigation";
 export default function Places() {
   const [places,setPlaces]=useState([])
   useEffect(() => {
-    axios.get('/places').then(({data})=>{setPlaces(data)})
+    axios.get('/user-places').then(({data})=>{setPlaces(data)})
   }, []);
   return (
     <div>
