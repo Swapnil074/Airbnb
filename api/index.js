@@ -196,5 +196,10 @@ app.get('/places',async (req,res)=>{
     const data=await Place.find()
     res.json(data);
 })
+app.get('/places/:id',async (req,res)=>{
+    const {id}=req.params;
+    const data=await Place.findById(id)
+    res.json(data)
+})
 
 app.listen(4000)
