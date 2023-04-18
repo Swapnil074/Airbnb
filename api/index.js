@@ -13,6 +13,7 @@ const jwtSecret="ewagsdgwrae";
 const multer=require('multer')
 const fs=require('fs')
 const Place=require('./models/Place')
+const Booking=require('./models/Booking')
 
 app.use(express.json())
 app.use(cookieParser())
@@ -200,6 +201,20 @@ app.get('/places/:id',async (req,res)=>{
     const {id}=req.params;
     const data=await Place.findById(id)
     res.json(data)
+})
+app.post('/booking',async(req,res)=>{
+    const {place,checkIn,checkOut,guests,mobile,name,cost}=req.body
+    const data=await Booking.create({
+      place,
+      checkIn,
+      checkOut,
+      guests,
+      mobile,
+      name,
+      price:cost,
+    });
+    res.json(data)
+
 })
 
 app.listen(4000)
